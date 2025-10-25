@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "646071122609",
+    "project_id": "makaha-journey-410fd",
+    "storage_bucket": "makaha-journey-410fd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646071122609:android:ab5b4316906d374ef54090",
+        "android_client_info": {
+          "package_name": "com.example.hajj_umrah_journey"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChcmp60cSumoG4jFu21nl7k7z6nW5lQuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
