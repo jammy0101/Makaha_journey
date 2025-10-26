@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../../resources/buttom_navigation_bar/buttom_navigation.dart';
 
-class AddUser extends StatefulWidget {
-  const AddUser({super.key});
+class Chat extends StatefulWidget {
+  const Chat({super.key});
 
   @override
-  State<AddUser> createState() => _AddUserState();
+  State<Chat> createState() => _ChatState();
 }
 
-class _AddUserState extends State<AddUser> {
+class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AddUser'),
+        title: Text('chat'),
         centerTitle: true,
       ),
-      bottomNavigationBar: const BottomNavigation(index: 1,),
+      bottomNavigationBar: const BottomNavigation(index: 2,),
       body: Column(
         children: [
 

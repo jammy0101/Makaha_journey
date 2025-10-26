@@ -224,7 +224,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../controller/firebase_services/firebase_services.dart';
-import '../../../../resources/colors/colors.dart';
 import '../../../../resources/components/custom_text_field.dart';
 import '../../../../resources/components/custom_text_field_email.dart';
 import '../../../../resources/routes/routes.dart';
@@ -276,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Text(
-                        'HELLO, WELCOME BACK',
+                        'HELLO, WELCOME BACK'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -293,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Email Address',
+                              'Email Address'.tr,
                               style: TextStyle(
                                 fontSize: isTablet ? 20 : 16,
                                 fontWeight: FontWeight.w500,
@@ -308,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'Password',
+                              'Password'.tr,
                               style: TextStyle(
                                 fontSize: isTablet ? 20 : 16,
                                 fontWeight: FontWeight.w500,
@@ -340,7 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // Get.toNamed(RoutesName.forgotPassword);
                                 },
                                 child: Text(
-                                  'Forgot password?',
+                                  'Forgot password?'.tr,
                                   style: TextStyle(
                                     fontSize: isTablet ? 18 : 15,
                                     color: theme.colorScheme.primary, // ✅ Adaptive color
@@ -380,7 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Expanded(child: Divider(color: theme.dividerColor)),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text('OR', style: TextStyle(color: theme.colorScheme.onSurface)),
+                            child: Text('OR'.tr, style: TextStyle(color: theme.colorScheme.onSurface)),
                           ),
                           Expanded(child: Divider(color: theme.dividerColor)),
                         ],
@@ -395,7 +394,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           loading: firebaseServices.loadingGoogleL.value,
                           title: '',
                           onPress: () async {
-                            // await firebaseServices.loginWithGoogle();
+                             await firebaseServices.loginWithGoogle();
                           },
                           textColor: theme.colorScheme.onSurface,
                           borderColor: theme.colorScheme.surface,
@@ -421,7 +420,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           InkWell(
                             onTap: () => Get.toNamed(RoutesName.registerScreen),
                             child: Text(
-                              ' Signup',
+                              'Signup'.tr,
                               style: TextStyle(
                                 color: theme.colorScheme.primary,
                                 fontWeight: FontWeight.bold,

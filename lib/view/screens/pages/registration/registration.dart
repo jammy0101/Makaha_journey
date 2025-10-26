@@ -325,7 +325,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
 
                       Text(
-                        'Create An Account',
+                        'Create An Account'.tr,
                         style: theme.textTheme.headlineMedium?.copyWith(
                           color: theme.colorScheme.onSurface,
                           fontSize: width * 0.065,
@@ -337,7 +337,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 SizedBox(height: 5,),
                 /// Name
-                buildLabel('Full Name', theme),
+                buildLabel('Full Name'.tr, theme),
                 CustomTextFieldName(
                   controller: nameController,
                   hintText: '',
@@ -346,7 +346,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 /// Email
                 SizedBox(height: height * 0.02),
-                buildLabel('Email Address', theme),
+                buildLabel('Email Address'.tr, theme),
                 CustomTextFieldEmail(
                   controller: emailControllerR,
                   hintText: '',
@@ -355,7 +355,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 /// Password
                 SizedBox(height: height * 0.01),
-                buildLabel('Password', theme),
+                buildLabel('Password'.tr, theme),
                 Obx(() => CustomTextField(
                   controller: passwordControllerR,
                   obscureText: !firebaseServices.isPasswordVisibleR.value,
@@ -374,7 +374,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 /// Confirm Password
                 SizedBox(height: height * 0.02),
-                buildLabel('Confirm Password', theme),
+                buildLabel('Confirm Password'.tr, theme),
                 Obx(() => CustomTextField(
                   controller: confirmPasswordR,
                   obscureText: !firebaseServices.isPasswordVisibleRE.value,
@@ -398,7 +398,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   width: double.infinity,
                   height: 55,
                   loading: firebaseServices.loadingRegistration.value,
-                  title: 'Get Started',
+                  title: 'Get Started'.tr,
                   onPress: () {
                     if (formKey1.currentState!.validate()) {
                       firebaseServices.registration(
@@ -421,7 +421,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        "OR",
+                        "OR".tr,
                         style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.7)),
                       ),
                     ),
@@ -438,7 +438,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   loading: firebaseServices.loadingGoogleL.value,
                   title: '',
                   onPress: () async {
-                    // await firebaseServices.loginWithGoogle();
+                     await firebaseServices.loginWithGoogle();
                   },
                   textColor: theme.colorScheme.onSurface,
                   borderColor: theme.colorScheme.surface,
@@ -451,7 +451,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        'Continue with Google',
+                        'Continue with Google'.tr,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.onSurface,
@@ -468,13 +468,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Already have an account?",
+                      "Already have an account?".tr,
                       style: theme.textTheme.bodyMedium,
                     ),
                     TextButton(
                       onPressed: () => Get.toNamed(RoutesName.loginScreen),
                       child: Text(
-                        'Login',
+                        'Login'.tr,
                         style: TextStyle(
                           color: AppColor.gold,
                           fontWeight: FontWeight.bold,

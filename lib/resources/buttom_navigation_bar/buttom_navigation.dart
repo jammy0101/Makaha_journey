@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '../routes/routes.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -13,57 +15,64 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   late int myIndex = widget.index;
 
+  void onTabChange(int index) {
+    if (index == myIndex) return;
+    setState(() => myIndex = index);
+
+    switch (index) {
+      case 0:
+        Get.offAllNamed(RoutesName.homeViews);
+        break;
+      case 1:
+        Get.offAllNamed(RoutesName.duaLibrary);
+        break;
+      case 2:
+        Get.offAllNamed(RoutesName.chat);
+        break;
+      case 3:
+        Get.offAllNamed(RoutesName.setting);
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0), // Creates floating effect
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(25), // Rounded corners
-        child: Material(
-          elevation: 8, // Shadow
-          borderRadius: BorderRadius.circular(25),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: BottomNavigationBar(
-              selectedItemColor: Colors.red,
-              unselectedItemColor: Colors.black,
-              backgroundColor: Colors.white,
-              type: BottomNavigationBarType.fixed,
-              onTap: (index) {
-                if (index == myIndex) return;
-                setState(() {
-                  myIndex = index;
-                });
+    final theme = Theme.of(context);
 
-                switch (index) {
-                  case 0:
-                    Get.offAllNamed(RoutesName.homeViews);
-                    break;
-                  case 1:
-                    Get.offAllNamed(RoutesName.addUser);
-                    break;
-                  case 2:
-                    Get.offAllNamed(RoutesName.setting);
-                    break;
-                }
-              },
-              currentIndex: myIndex,
-              items: const [
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.home,size: 30,), label: '', backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.supervised_user_circle,size: 30,),
-                    label: '',
-                    backgroundColor: Colors.white),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.settings,size: 30,), label: '', backgroundColor: Colors.white),
-              ],
-            ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: GNav(
+            gap: 8,
+            backgroundColor: Colors.transparent,
+            color: theme.colorScheme.onSurfaceVariant,
+            activeColor: theme.colorScheme.primary,
+            tabBackgroundColor: theme.colorScheme.primary.withOpacity(0.1),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            selectedIndex: myIndex,
+            onTabChange: onTabChange,
+            tabs: const [
+              GButton(icon: Icons.home, text: 'Home'),
+              GButton(icon: Icons.library_books, text: 'Library'),
+              GButton(icon: Icons.chat, text: 'Chat'),
+              GButton(icon: Icons.settings, text: 'Settings'),
+            ],
           ),
         ),
       ),
     );
   }
-
 }

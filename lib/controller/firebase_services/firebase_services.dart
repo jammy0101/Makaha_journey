@@ -1,10 +1,11 @@
 import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../resources/routes/routes.dart';
+
 
 class FirebaseServices extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -35,6 +36,8 @@ class FirebaseServices extends GetxController {
   void togglePasswordVisibilityL() {
     isPasswordVisibleL.value = !isPasswordVisibleL.value;
   }
+
+
 
   //:::::::::::>> LOGIN, REGISTRATION and  GOOGLE FUNCTIONALITY<<::::::::::::
 
@@ -92,45 +95,48 @@ class FirebaseServices extends GetxController {
   }
 
 
-  // Future<User?> loginWithGoogle() async {
-  //   try {
-  //     final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-  //     // Sign out first to always show account picker
-  //     await googleSignIn.signOut();
-  //     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-  //     if (googleUser == null) {
-  //       Get.snackbar('Cancelled'.tr, 'Google sign-in was cancelled'.tr);
-  //       return null;
-  //     }
-  //     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-  //     final OAuthCredential credential = GoogleAuthProvider.credential(
-  //       accessToken: googleAuth.accessToken,
-  //       idToken: googleAuth.idToken,
-  //     );
-  //
-  //     final UserCredential userCredential = await auth.signInWithCredential(credential);
-  //
-  //     final user = userCredential.user;
-  //     if (user != null) {
-  //       await saveUserToFirestore(user, fullName: user.displayName); // This is safe
-  //     }
-  //     Get.snackbar(
-  //       'Welcome 👋',
-  //       'Logged in as ${user?.displayName ?? 'User'}',
-  //       snackPosition: SnackPosition.TOP,
-  //       backgroundColor: const Color(0xFF4CAF50),
-  //       colorText: const Color(0xFFFFFFFF),
-  //     );
-  //
-  //     // ✅ Navigate to home screen
-  //     Get.offAllNamed(RoutesName.homeViews);
-  //
-  //     return user;
-  //   } catch (e) {
-  //     Get.snackbar('Error'.tr, e.toString());
-  //     return null;
-  //   }
-  // }
+  Future<User?> loginWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      // Sign out first to always show account picker
+      await googleSignIn.signOut();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) {
+        Get.snackbar('Cancelled'.tr, 'Google sign-in was cancelled'.tr);
+        return null;
+      }
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential = await auth.signInWithCredential(credential);
+
+      final user = userCredential.user;
+      if (user != null) {
+        await saveUserToFirestore(user, fullName: user.displayName); // This is safe
+      }
+      Get.snackbar(
+        'Welcome 👋',
+        'Logged in as ${user?.displayName ?? 'User'}',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: const Color(0xFF4CAF50),
+        colorText: const Color(0xFFFFFFFF),
+      );
+
+      // ✅ Navigate to home screen
+      Get.offAllNamed(RoutesName.homeViews);
+
+      return user;
+    } catch (e) {
+      Get.snackbar('Error'.tr, e.toString());
+      return null;
+    }
+  }
+
+
+
 
 
   Future<void> saveUserToFirestore(User user, {String? fullName}) async {

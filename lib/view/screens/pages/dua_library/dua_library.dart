@@ -15,9 +15,10 @@ class _DuaLibraryState extends State<DuaLibrary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
+        title: Text('Dua library'),
+        centerTitle: true,
       ),
-      bottomNavigationBar: const BottomNavigation(index: 3,),
+      bottomNavigationBar: const BottomNavigation(index: 1,),
       body: Column(
         children: [
 
