@@ -30,7 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         Get.offAllNamed(RoutesName.chat);
         break;
       case 3:
-        Get.offAllNamed(RoutesName.setting);
+        Get.offAllNamed(RoutesName.more);
         break;
     }
   }
@@ -68,7 +68,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: Icons.library_books, text: 'Library'),
               GButton(icon: Icons.chat, text: 'Chat'),
-              GButton(icon: Icons.settings, text: 'Settings'),
+              GButton(icon: Icons.more, text: 'More'),
             ],
           ),
         ),

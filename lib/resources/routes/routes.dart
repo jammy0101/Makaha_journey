@@ -8,4 +8,5 @@ class RoutesName {
   static const String chat = '/chat';
   static const String setting = '/setting';
   static const String duaLibrary = '/duaLibrary';
+  static const String more = '/more';
 }

@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:hajj_umrah_journey/resources/routes/routes.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/add_user/chat.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/dua_library/dua_library.dart';
+import 'package:hajj_umrah_journey/view/screens/pages/more/more.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/registration/registration.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/setting/setting.dart';
 import '../../view/screens/pages/home_screen/home_screen.dart';
@@ -53,6 +54,12 @@ class AppRoutes {
     GetPage(
       name: RoutesName.duaLibrary,
       page: () => const  DuaLibrary(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: const Duration(milliseconds: 250),
+    ),
+    GetPage(
+      name: RoutesName.more,
+      page: () => const  More(),
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 250),
     ),

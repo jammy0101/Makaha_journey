@@ -92,6 +92,12 @@ class CustomDrawer extends StatelessWidget {
           ),
           _buildDrawerItem(
             context,
+            icon: Icons.more,
+            text: "More",
+            onTap: () => Get.offAllNamed(RoutesName.more),
+          ),
+          _buildDrawerItem(
+            context,
             icon: Icons.settings_outlined,
             text: "Settings",
             onTap: () => Get.offAllNamed(RoutesName.setting),

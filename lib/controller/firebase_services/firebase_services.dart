@@ -136,22 +136,35 @@ class FirebaseServices extends GetxController {
   }
 
 
-
-
-
   Future<void> saveUserToFirestore(User user, {String? fullName}) async {
     final userRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
 
     final snapshot = await userRef.get();
+    print(snapshot.data());
     if (!snapshot.exists) {
       await userRef.set({
         'uid': user.uid,
         'name': fullName ?? user.displayName ?? '',
-        'email': user.email ?? 'no email',
+        'email': user.email ?? '',
+        'phone': user.phoneNumber ?? '',
+        'profileImage': user.photoURL ?? '',
+        'language': 'en', // default
+        'preferences': {
+          'notifications': true,
+          'theme': 'light',
+        },
         'createdAt': FieldValue.serverTimestamp(),
+      });
+    } else {
+      // ✅ Update if already exists (optional)
+      await userRef.update({
+        'name': fullName ?? user.displayName ?? '',
+        'email': user.email ?? '',
+        'profileImage': user.photoURL ?? '',
       });
     }
   }
+
 
 
 
