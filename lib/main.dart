@@ -41,6 +41,7 @@
 //     ));
 //   }
 // }
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,6 +50,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hajj_umrah_journey/controller/themeController/theme_controller.dart';
 import 'package:hajj_umrah_journey/resources/colors/them.dart';
 import 'package:hajj_umrah_journey/resources/routes/routes_name.dart';
+import 'controller/chat_controlle/chat_control.dart';
 import 'controller/firebase_services/firebase_services.dart';
 
 void main() async {
@@ -71,6 +73,14 @@ void main() async {
   // Put services/controllers after initialization
   Get.put(FirebaseServices());
   Get.put(ThemeController());
+  // ✅ Initialize ChatController *after login*, not before
+  FirebaseAuth.instance.authStateChanges().listen((user) {
+    if (user != null) {
+      if (!Get.isRegistered<ChatController>()) {
+        Get.put(ChatController());
+      }
+    }
+  });
 
   runApp(MyApp(initialLocale: initialLocale));
 }

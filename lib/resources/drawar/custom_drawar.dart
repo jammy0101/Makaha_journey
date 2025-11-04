@@ -102,9 +102,7 @@ class CustomDrawer extends StatelessWidget {
             text: "Settings",
             onTap: () => Get.offAllNamed(RoutesName.setting),
           ),
-
           const Spacer(),
-
           // 🔹 Bottom Section
           Divider(
             thickness: 1,

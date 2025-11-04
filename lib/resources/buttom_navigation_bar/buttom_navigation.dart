@@ -27,7 +27,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         Get.offAllNamed(RoutesName.duaLibrary);
         break;
       case 2:
-        Get.offAllNamed(RoutesName.chat);
+        Get.offAllNamed(RoutesName.chatHomeScreen);
         break;
       case 3:
         Get.offAllNamed(RoutesName.more);
