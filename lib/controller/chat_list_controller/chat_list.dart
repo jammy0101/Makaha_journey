@@ -57,7 +57,6 @@ class ChatListController extends GetxController {
     }
   }
 
-
   void loadChats() async {
     final currentUserId = FirebaseAuth.instance.currentUser?.uid;
     if (currentUserId == null) return;
