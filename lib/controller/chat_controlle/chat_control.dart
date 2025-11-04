@@ -78,6 +78,7 @@ class ChatController extends GetxController {
         .orderBy('timestamp', descending: true)
         .snapshots()
         .listen((snapshot) {
+      print("Chats found: ${snapshot.docs.length}");
       messages.value = snapshot.docs
           .map((doc) => MessageModel.fromMap(doc.data()))
           .toList();

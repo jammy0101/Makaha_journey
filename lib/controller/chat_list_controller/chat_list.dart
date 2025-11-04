@@ -48,6 +48,7 @@ class ChatListController extends GetxController {
           },
           'lastMessage': '',
           'createdAt': FieldValue.serverTimestamp(),
+          'updatedAt': FieldValue.serverTimestamp(), // <-- add this
         });
       }
 
