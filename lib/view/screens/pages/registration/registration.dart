@@ -1,7 +1,6 @@
 //
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
-// import 'package:hajj_umrah_journey/view/screens/pages/home_screen/home_screen.dart';
 // import '../../../../controller/firebase_services/firebase_services.dart';
 // import '../../../../resources/colors/colors.dart';
 // import '../../../../resources/components/custom_text_field.dart';
@@ -22,8 +21,10 @@
 //
 // class _RegistrationScreenState extends State<RegistrationScreen> {
 //   final formKey1 = GlobalKey<FormState>();
+//
 //   final TextEditingController emailControllerR = TextEditingController();
 //   final TextEditingController nameController = TextEditingController();
+//   final TextEditingController phoneController = TextEditingController();
 //   final TextEditingController passwordControllerR = TextEditingController();
 //   final TextEditingController confirmPasswordR = TextEditingController();
 //
@@ -33,6 +34,7 @@
 //     passwordControllerR.dispose();
 //     confirmPasswordR.dispose();
 //     nameController.dispose();
+//     phoneController.dispose();
 //     super.dispose();
 //   }
 //
@@ -52,8 +54,7 @@
 //             child: Column(
 //               crossAxisAlignment: CrossAxisAlignment.start,
 //               children: [
-//                 /// Header
-//
+//                 /// Logo
 //                 Center(
 //                   child: Image.asset(
 //                     'assets/images/splash2.png',
@@ -61,23 +62,22 @@
 //                     fit: BoxFit.contain,
 //                   ),
 //                 ),
-//                 Center(
-//                   child: Column(
-//                     children: [
+//                 const SizedBox(height: 5),
 //
-//                       Text(
-//                         'Create An Account'.tr,
-//                         style: theme.textTheme.headlineMedium?.copyWith(
-//                           color: theme.colorScheme.onSurface,
-//                           fontSize: width * 0.065,
-//                         ),
-//                       ),
-//                     ],
+//                 /// Header
+//                 Center(
+//                   child: Text(
+//                     'Create An Account'.tr,
+//                     style: theme.textTheme.headlineMedium?.copyWith(
+//                       color: theme.colorScheme.onSurface,
+//                       fontSize: width * 0.065,
+//                     ),
 //                   ),
 //                 ),
 //
-//                 SizedBox(height: 5,),
-//                 /// Name
+//                 const SizedBox(height: 10),
+//
+//                 /// Full Name
 //                 buildLabel('Full Name'.tr, theme),
 //                 CustomTextFieldName(
 //                   controller: nameController,
@@ -94,8 +94,18 @@
 //                   validator: validateEmail,
 //                 ),
 //
+//                 /// Phone Number
+//                 SizedBox(height: height * 0.02),
+//                 buildLabel('Phone Number'.tr, theme),
+//                 CustomTextField(
+//                   controller: phoneController,
+//                   hintText: '',
+//                   keyboardType: TextInputType.phone,
+//                   validator: validatePhone,
+//                 ),
+//
 //                 /// Password
-//                 SizedBox(height: height * 0.01),
+//                 SizedBox(height: height * 0.02),
 //                 buildLabel('Password'.tr, theme),
 //                 Obx(() => CustomTextField(
 //                   controller: passwordControllerR,
@@ -146,6 +156,7 @@
 //                         email: emailControllerR.text.trim(),
 //                         password: passwordControllerR.text,
 //                         fullName: nameController.text.trim(),
+//                         phone: phoneController.text.trim(),
 //                       );
 //                     }
 //                   },
@@ -179,18 +190,15 @@
 //                   loading: firebaseServices.loadingGoogleL.value,
 //                   title: '',
 //                   onPress: () async {
-//                      await firebaseServices.loginWithGoogle();
+//                     await firebaseServices.loginWithGoogle();
 //                   },
 //                   textColor: theme.colorScheme.onSurface,
 //                   borderColor: theme.colorScheme.surface,
 //                   child: Row(
 //                     mainAxisAlignment: MainAxisAlignment.center,
 //                     children: [
-//                       Image.asset(
-//                         'assets/images/googlelogo.png',
-//                         height: 30,
-//                       ),
-//                       SizedBox(width: 10),
+//                       Image.asset('assets/images/googlelogo.png', height: 30),
+//                       const SizedBox(width: 10),
 //                       Text(
 //                         'Continue with Google'.tr,
 //                         style: theme.textTheme.bodyMedium?.copyWith(
@@ -232,7 +240,6 @@
 //     );
 //   }
 //
-//   /// Helper for labels
 //   Widget buildLabel(String label, ThemeData theme) {
 //     return Padding(
 //       padding: const EdgeInsets.only(bottom: 6.0),
@@ -254,18 +261,20 @@
 //     return null;
 //   }
 //
+//   String? validatePhone(String? value) {
+//     if (value == null || value.isEmpty) return "Phone number is required".tr;
+//     if (!RegExp(r'^[0-9]{10,15}$').hasMatch(value)) {
+//       return "Enter a valid phone number".tr;
+//     }
+//     return null;
+//   }
+//
 //   String? validateConfirmPassword(String? value) {
 //     String password = passwordControllerR.text.trim();
 //     if (value == null || value.isEmpty) return 'Confirm Password is required'.tr;
 //     if (value != password) {
-//       Future.delayed(Duration.zero, () {
-//         Get.snackbar(
-//           "Error".tr,
-//           "Passwords do not match".tr,
-//           backgroundColor: AppColor.error,
-//           colorText: Colors.white,
-//         );
-//       });
+//       Get.snackbar("Error".tr, "Passwords do not match".tr,
+//           backgroundColor: AppColor.error, colorText: Colors.white);
 //       return "Passwords do not match".tr;
 //     }
 //     return null;
@@ -286,8 +295,10 @@
 //     return null;
 //   }
 // }
+// views/auth/registration_screen.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../../controller/firebase_services/firebase_services.dart';
 import '../../../../resources/colors/colors.dart';
 import '../../../../resources/components/custom_text_field.dart';
@@ -307,22 +318,30 @@ class RegistrationScreen extends StatefulWidget {
 final FirebaseServices firebaseServices = Get.find<FirebaseServices>();
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final formKey1 = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
-  final TextEditingController emailControllerR = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordControllerR = TextEditingController();
-  final TextEditingController confirmPasswordR = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'PK'); // default country
+  bool phoneValid = false;
 
   @override
   void dispose() {
-    emailControllerR.dispose();
-    passwordControllerR.dispose();
-    confirmPasswordR.dispose();
+    emailController.dispose();
     nameController.dispose();
     phoneController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
+  }
+
+  String _normalizedPhone() {
+    // prefer the PhoneNumber instance (gives E.164); fallback to raw input
+    return phoneNumber.phoneNumber ?? phoneController.text.trim();
   }
 
   @override
@@ -337,11 +356,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: width * 0.06, vertical: height * 0.02),
           child: Form(
-            key: formKey1,
+            key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// Logo
+                // Logo
                 Center(
                   child: Image.asset(
                     'assets/images/splash2.png',
@@ -349,9 +368,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     fit: BoxFit.contain,
                   ),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
 
-                /// Header
+                // Header
                 Center(
                   child: Text(
                     'Create An Account'.tr,
@@ -362,90 +381,119 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 18),
 
-                /// Full Name
+                // Name
                 buildLabel('Full Name'.tr, theme),
                 CustomTextFieldName(
                   controller: nameController,
-                  hintText: '',
+                  hintText: 'Enter full name'.tr,
                   validator: validateName,
                 ),
 
-                /// Email
                 SizedBox(height: height * 0.02),
+
+                // Email
                 buildLabel('Email Address'.tr, theme),
                 CustomTextFieldEmail(
-                  controller: emailControllerR,
-                  hintText: '',
+                  controller: emailController,
+                  hintText: 'Enter email'.tr,
                   validator: validateEmail,
                 ),
 
-                /// Phone Number
                 SizedBox(height: height * 0.02),
+
+                // Phone (intl)
                 buildLabel('Phone Number'.tr, theme),
-                CustomTextField(
-                  controller: phoneController,
-                  hintText: '',
+                InternationalPhoneNumberInput(
+                  onInputChanged: (PhoneNumber number) {
+                    phoneNumber = number;
+                  },
+                  onInputValidated: (bool value) {
+                    setState(() {
+                      phoneValid = value;
+                    });
+                  },
+                  selectorConfig: const SelectorConfig(
+                    selectorType: PhoneInputSelectorType.DROPDOWN,
+                  ),
+                  ignoreBlank: false,
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
+                  selectorTextStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  textFieldController: phoneController,
+                  initialValue: phoneNumber,
+                  formatInput: true,
+                  inputDecoration: InputDecoration(
+                    hintText: '+92 3xx xxxxxxx',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
                   keyboardType: TextInputType.phone,
-                  validator: validatePhone,
                 ),
 
-                /// Password
                 SizedBox(height: height * 0.02),
+
+                // Password
                 buildLabel('Password'.tr, theme),
                 Obx(() => CustomTextField(
-                  controller: passwordControllerR,
+                  controller: passwordController,
                   obscureText: !firebaseServices.isPasswordVisibleR.value,
-                  hintText: '',
+                  hintText: 'Enter password'.tr,
                   suffixIcon: IconButton(
                     onPressed: firebaseServices.togglePasswordVisibility,
                     icon: Icon(
-                      firebaseServices.isPasswordVisibleR.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      firebaseServices.isPasswordVisibleR.value ? Icons.visibility : Icons.visibility_off,
                       color: theme.colorScheme.primary,
                     ),
                   ),
                   validator: validatePassword,
                 )),
 
-                /// Confirm Password
                 SizedBox(height: height * 0.02),
+
+                // Confirm password
                 buildLabel('Confirm Password'.tr, theme),
                 Obx(() => CustomTextField(
-                  controller: confirmPasswordR,
+                  controller: confirmPasswordController,
                   obscureText: !firebaseServices.isPasswordVisibleRE.value,
-                  hintText: '',
+                  hintText: 'Confirm password'.tr,
                   suffixIcon: IconButton(
                     onPressed: firebaseServices.toggleConfirmPasswordVisibility,
                     icon: Icon(
-                      firebaseServices.isPasswordVisibleRE.value
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                      firebaseServices.isPasswordVisibleRE.value ? Icons.visibility : Icons.visibility_off,
                       color: theme.colorScheme.primary,
                     ),
                   ),
-                  validator: validateConfirmPassword,
+                  validator: (val) => validateConfirmPassword(val, passwordController.text),
                 )),
 
                 SizedBox(height: height * 0.03),
 
-                /// Register Button
+                // Register button
                 Obx(() => RoundButton(
                   width: double.infinity,
                   height: 55,
                   loading: firebaseServices.loadingRegistration.value,
                   title: 'Get Started'.tr,
                   onPress: () {
-                    if (formKey1.currentState!.validate()) {
-                      firebaseServices.registration(
-                        email: emailControllerR.text.trim(),
-                        password: passwordControllerR.text,
-                        fullName: nameController.text.trim(),
-                        phone: phoneController.text.trim(),
-                      );
+                    // Basic form validate + phone validity
+                    if (!formKey.currentState!.validate()) return;
+
+                    final normalized = _normalizedPhone();
+                    if (normalized.isEmpty) {
+                      Get.snackbar("Error".tr, "Phone number is required".tr);
+                      return;
                     }
+
+                    // optional: ensure phone has '+' at start (best to rely on intl lib output)
+                    final phoneToSave = normalized.startsWith('+') ? normalized : '+$normalized';
+
+                    firebaseServices.registration(
+                      email: emailController.text.trim(),
+                      password: passwordController.text,
+                      fullName: nameController.text.trim(),
+                      phone: phoneToSave,
+                    );
                   },
                   buttonColor: AppColor.gold,
                   textColor: AppColor.whiteCream,
@@ -453,16 +501,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 SizedBox(height: height * 0.02),
 
-                /// Divider
+                // Divider OR
                 Row(
                   children: [
                     Expanded(child: Divider(color: theme.colorScheme.surface)),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        "OR".tr,
-                        style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.7)),
-                      ),
+                      child: Text("OR".tr, style: TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.7))),
                     ),
                     Expanded(child: Divider(color: theme.colorScheme.surface)),
                   ],
@@ -470,7 +515,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 SizedBox(height: height * 0.03),
 
-                /// Google Sign-in Button
+                // Google sign-in button (keeps your previous RoundButton2)
                 Obx(() => RoundButton2(
                   width: double.infinity,
                   height: 55,
@@ -488,10 +533,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(width: 10),
                       Text(
                         'Continue with Google'.tr,
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: theme.colorScheme.onSurface,
-                        ),
+                        style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -499,24 +541,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                 SizedBox(height: height * 0.025),
 
-                /// Already have an account?
+                // Already have account
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Already have an account?".tr,
-                      style: theme.textTheme.bodyMedium,
-                    ),
+                    Text("Already have an account?".tr),
                     TextButton(
                       onPressed: () => Get.toNamed(RoutesName.loginScreen),
-                      child: Text(
-                        'Login'.tr,
-                        style: TextStyle(
-                          color: AppColor.gold,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                      child: Text('Login'.tr, style: TextStyle(color: AppColor.gold, fontWeight: FontWeight.bold)),
+                    )
                   ],
                 ),
               ],
@@ -527,20 +560,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  // -------------------------
+  // Validators
+  // -------------------------
   Widget buildLabel(String label, ThemeData theme) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
-      child: Text(
-        label,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          fontWeight: FontWeight.w600,
-          color: theme.colorScheme.onSurface,
-        ),
-      ),
+      child: Text(label, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, color: theme.colorScheme.onSurface)),
     );
   }
 
-  /// Validators
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return "Email is required".tr;
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -548,31 +577,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     return null;
   }
 
-  String? validatePhone(String? value) {
-    if (value == null || value.isEmpty) return "Phone number is required".tr;
-    if (!RegExp(r'^[0-9]{10,15}$').hasMatch(value)) {
-      return "Enter a valid phone number".tr;
-    }
-    return null;
-  }
-
-  String? validateConfirmPassword(String? value) {
-    String password = passwordControllerR.text.trim();
-    if (value == null || value.isEmpty) return 'Confirm Password is required'.tr;
-    if (value != password) {
-      Get.snackbar("Error".tr, "Passwords do not match".tr,
-          backgroundColor: AppColor.error, colorText: Colors.white);
-      return "Passwords do not match".tr;
-    }
-    return null;
-  }
-
   String? validateName(String? value) {
     if (value == null || value.trim().isEmpty) return "Name is required".tr;
     if (value.trim().length < 3) return "Name must be at least 3 characters".tr;
-    if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value.trim())) {
-      return "Only alphabets and spaces are allowed".tr;
-    }
+    if (!RegExp(r"^[a-zA-Z\s]+$").hasMatch(value.trim())) return "Only alphabets and spaces are allowed".tr;
+    return null;
+  }
+
+  String? validatePhone(String? value) {
+    if (value == null || value.isEmpty) return "Phone number is required".tr;
+    // we rely on intl_phone_number_input, so minimal check here
     return null;
   }
 
@@ -581,4 +595,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     if (value.length < 6) return "Password must be at least 6 characters".tr;
     return null;
   }
+
+  String? validateConfirmPassword(String? value, String password) {
+    if (value == null || value.isEmpty) return 'Confirm Password is required'.tr;
+    if (value != password) {
+      Get.snackbar("Error".tr, "Passwords do not match".tr, backgroundColor: AppColor.error, colorText: Colors.white);
+      return "Passwords do not match".tr;
+    }
+    return null;
+  }
 }
+

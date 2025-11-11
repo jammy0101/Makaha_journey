@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -42,19 +41,27 @@ class AppRoutes {
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 250),
     ),
+
     // GetPage(
     //   name: RoutesName.chat,
-    //   page: () =>   ChatScreen(),
-    //   transition: Transition.leftToRightWithFade,
-    //   transitionDuration: const Duration(milliseconds: 250),
+    //   page: () {
+    //     final args = Get.arguments as Map<String, dynamic>;
+    //     return ChatScreen(
+    //       receiverId: args['receiverId'],
+    //       receiverName: args['receiverName'],
+    //     );
+    //   },
     // ),
     GetPage(
       name: RoutesName.chat,
       page: () {
-        final args = Get.arguments as Map<String, dynamic>;
+        final args = Get.arguments as Map<String, dynamic>?; // nullable
+        final receiverId = args?['receiverId'] as String? ?? '';
+        final receiverName = args?['receiverName'] as String? ?? 'Friend';
+
         return ChatScreen(
-          receiverId: args['receiverId'],
-          receiverName: args['receiverName'],
+          receiverId: receiverId,
+          receiverName: receiverName,
         );
       },
     ),

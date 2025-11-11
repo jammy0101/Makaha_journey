@@ -12,7 +12,20 @@
           "package_name": "com.example.hajj_umrah_journey"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "646071122609-iem2erk75evcmtojuhn8ujanpfa2fli5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hajj_umrah_journey",
+            "certificate_hash": "de6b03ad83197e230eb91777d52dfe40df185e17"
+          }
+        },
+        {
+          "client_id": "646071122609-cv36cj5le5053187lrr08blupn1jkqfg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyChcmp60cSumoG4jFu21nl7k7z6nW5lQuk"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646071122609-cv36cj5le5053187lrr08blupn1jkqfg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "646071122609-7c1tq0k963cqffiuibsogoc1q12ormvr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hajjUmrahJourney"
+              }
+            }
+          ]
         }
       }
     }
