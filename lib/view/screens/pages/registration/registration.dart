@@ -407,18 +407,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 buildLabel('Phone Number'.tr, theme),
                 InternationalPhoneNumberInput(
                   onInputChanged: (PhoneNumber number) {
-                    phoneNumber = number;
+                    phoneNumber = number; // store current number
                   },
                   onInputValidated: (bool value) {
-                    setState(() {
-                      phoneValid = value;
-                    });
+                    firebaseServices.setPhoneValid(value); // reactive, no setState
                   },
                   selectorConfig: const SelectorConfig(
                     selectorType: PhoneInputSelectorType.DROPDOWN,
                   ),
                   ignoreBlank: false,
-                  autoValidateMode: AutovalidateMode.onUserInteraction,
+                  autoValidateMode: AutovalidateMode.disabled, // optional, reduces rebuilds
                   selectorTextStyle: TextStyle(color: theme.colorScheme.onSurface),
                   textFieldController: phoneController,
                   initialValue: phoneNumber,
@@ -430,6 +428,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   ),
                   keyboardType: TextInputType.phone,
                 ),
+
 
                 SizedBox(height: height * 0.02),
 

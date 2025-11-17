@@ -137,6 +137,8 @@ import 'package:hajj_umrah_journey/resources/colors/them.dart';
 import 'package:hajj_umrah_journey/resources/getx_localization/languages.dart';
 import 'package:hajj_umrah_journey/resources/routes/routes_name.dart';
 
+
+
 /// Background message handler must be top-level
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -152,6 +154,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
 
   // Initialize notification service
   await NotificationService.initialize();

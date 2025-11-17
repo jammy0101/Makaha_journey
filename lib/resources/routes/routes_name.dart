@@ -42,29 +42,29 @@ class AppRoutes {
       transitionDuration: const Duration(milliseconds: 250),
     ),
 
-    // GetPage(
-    //   name: RoutesName.chat,
-    //   page: () {
-    //     final args = Get.arguments as Map<String, dynamic>;
-    //     return ChatScreen(
-    //       receiverId: args['receiverId'],
-    //       receiverName: args['receiverName'],
-    //     );
-    //   },
-    // ),
     GetPage(
       name: RoutesName.chat,
       page: () {
-        final args = Get.arguments as Map<String, dynamic>?; // nullable
-        final receiverId = args?['receiverId'] as String? ?? '';
-        final receiverName = args?['receiverName'] as String? ?? 'Friend';
-
+        final args = Get.arguments as Map<String, dynamic>;
         return ChatScreen(
-          receiverId: receiverId,
-          receiverName: receiverName,
+          receiverId: args['receiverId'],
+          receiverName: args['receiverName'],
         );
       },
     ),
+    // GetPage(
+    //   name: RoutesName.chat,
+    //   page: () {
+    //     final args = Get.arguments as Map<String, dynamic>?; // nullable
+    //     final receiverId = args?['receiverId'] as String? ?? '';
+    //     final receiverName = args?['receiverName'] as String? ?? 'Friend';
+    //
+    //     return ChatScreen(
+    //       receiverId: receiverId,
+    //       receiverName: receiverName,
+    //     );
+    //   },
+    // ),
 
     GetPage(
       name: RoutesName.chatHomeScreen,

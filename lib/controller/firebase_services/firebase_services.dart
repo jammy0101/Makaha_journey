@@ -151,6 +151,9 @@ class FirebaseServices extends GetxController {
   void toggleConfirmPasswordVisibility() => isPasswordVisibleRE.toggle();
   void togglePasswordVisibilityL() => isPasswordVisibleL.toggle();
 
+  var phoneValid = false.obs;
+
+  void setPhoneValid(bool value) => phoneValid.value = value;
   /// 🔹 Registration
   Future<void> registration({
     required String email,
