@@ -92,7 +92,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
             children: [
 
               const Text(
-                "A verification email has been sent.\nPlease check your inbox.",
+                "A verification email has been sent.\nPlease check your inbox or check in spam folder.",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 16),
               ),
