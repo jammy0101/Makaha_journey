@@ -10,4 +10,5 @@ class RoutesName {
   static const String setting = '/setting';
   static const String duaLibrary = '/duaLibrary';
   static const String more = '/more';
+  static const String emailVerification = '/email_verify';
 }

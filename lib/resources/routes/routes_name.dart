@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:hajj_umrah_journey/resources/routes/routes.dart';
+import 'package:hajj_umrah_journey/view/screens/email_verification/email_verification.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/dua_library/dua_library.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/more/more.dart';
 import 'package:hajj_umrah_journey/view/screens/pages/registration/registration.dart';
@@ -26,6 +27,12 @@ class AppRoutes {
     GetPage(
       name: RoutesName.homeViews,
       page: () => const  HomeScreen(),
+      transition: Transition.leftToRightWithFade,
+      transitionDuration: const Duration(milliseconds: 250),
+    ),
+    GetPage(
+      name: RoutesName.emailVerification,
+      page: () => const  EmailVerifyScreen(),
       transition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 250),
     ),

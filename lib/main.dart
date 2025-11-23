@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 import 'dart:ui'; // IMPORTANT for TextDirection enums
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,7 +9,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:hajj_umrah_journey/controller/themeController/theme_controller.dart';
 import 'package:hajj_umrah_journey/controller/chat_controlle/chat_control.dart';
 import 'package:hajj_umrah_journey/controller/firebase_services/firebase_services.dart';
@@ -175,9 +172,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-
       getPages: AppRoutes.appRoutes(),
-
       /// ===========================
       /// 🔥 GLOBAL RTL + ICON FIX
       /// ===========================
