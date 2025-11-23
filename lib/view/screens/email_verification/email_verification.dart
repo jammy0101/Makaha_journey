@@ -1,37 +1,4 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get_core/src/get_main.dart';
-// import 'package:get/get_navigation/src/extension_navigation.dart';
-//
-// class EmailVerifyScreen extends StatelessWidget {
-//   const EmailVerifyScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text("Verify Email")),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const Text(
-//               "A verification email has been sent.\nPlease check your inbox.",
-//               textAlign: TextAlign.center,
-//             ),
-//             const SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () async {
-//                 await FirebaseAuth.instance.currentUser?.sendEmailVerification();
-//                 Get.snackbar("Sent", "Verification email sent again.");
-//               },
-//               child: const Text("Resend Email"),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
