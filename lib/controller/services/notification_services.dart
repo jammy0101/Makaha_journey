@@ -1,46 +1,4 @@
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-//
-// class NotificationService {
-//   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-//   FlutterLocalNotificationsPlugin();
-//
-//   /// Initialize local notifications
-//   static Future<void> initialize() async {
-//     const AndroidInitializationSettings androidInit =
-//     AndroidInitializationSettings('@mipmap/ic_launcher');
-//
-//     const InitializationSettings settings =
-//     InitializationSettings(android: androidInit);
-//
-//     await _notificationsPlugin.initialize(settings);
-//   }
-//
-//   /// Show a local notification (no internet or FCM required)
-//   static Future<void> showLocalNotification({
-//     required String title,
-//     required String body,
-//   }) async {
-//     const AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-//       'chat_channel',
-//       'Chat Notifications',
-//       channelDescription: 'Notification channel for chat messages',
-//       importance: Importance.max,
-//       priority: Priority.high,
-//       playSound: true,
-//       icon: '@mipmap/ic_launcher',
-//     );
-//
-//     const NotificationDetails notificationDetails =
-//     NotificationDetails(android: androidDetails);
-//
-//     await _notificationsPlugin.show(
-//       0, // ID (you can change if needed)
-//       title,
-//       body,
-//       notificationDetails,
-//     );
-//   }
-// }
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

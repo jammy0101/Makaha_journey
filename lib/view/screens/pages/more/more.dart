@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -177,7 +178,7 @@ class _MoreState extends State<More> {
 
     final androidDetails = AndroidNotificationDetails(
       isCustomSoundSet ? 'silent_channel' : 'default_azan_channel',
-      'Prayer Reminders',
+      'Prayer Reminders'.tr,
       channelDescription: isCustomSoundSet
           ? 'Silent notifications, AudioPlayer plays custom sound'
           : 'Default Azan notifications',
@@ -284,7 +285,7 @@ class _MoreState extends State<More> {
         setState(() {
           prayerTimes = Map<String, String>.from(json.decode(saved));
           loading = false;
-          error = 'No internet — showing last saved prayer times';
+          error = 'No internet — showing last saved prayer times'.tr;
         });
         return;
       }
@@ -293,7 +294,7 @@ class _MoreState extends State<More> {
         setState(() {
           prayerTimes = defaultPrayerTimes[selectedCity]!;
           loading = false;
-          error = 'No internet — showing default prayer times';
+          error = 'No internet — showing default prayer times'.tr;
         });
         return;
       }
@@ -301,7 +302,7 @@ class _MoreState extends State<More> {
       setState(() {
         prayerTimes = {};
         loading = false;
-        error = 'No internet and no prayer times available';
+        error = 'No internet and no prayer times available'.tr;
       });
     }
   }
@@ -345,7 +346,7 @@ class _MoreState extends State<More> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('❌ No sound selected')),
+         SnackBar(content: Text('❌ No sound selected'.tr)),
       );
     }
   }
@@ -353,7 +354,7 @@ class _MoreState extends State<More> {
   /// =================== CUSTOM REMINDERS ===================
   Future<void> loadCustomReminders() async {
     final prefs = await SharedPreferences.getInstance();
-    final savedList = prefs.getStringList('custom_reminders') ?? [];
+    final savedList = prefs.getStringList('custom_reminders'.tr) ?? [];
     customReminders =
         savedList.map((e) => json.decode(e) as Map<String, dynamic>).toList();
     setState(() {});
@@ -362,7 +363,7 @@ class _MoreState extends State<More> {
   Future<void> saveCustomReminders() async {
     final prefs = await SharedPreferences.getInstance();
     final encoded = customReminders.map((e) => json.encode(e)).toList();
-    await prefs.setStringList('custom_reminders', encoded);
+    await prefs.setStringList('custom_reminders'.tr, encoded);
   }
 
   Future<void> addCustomReminder(String title, TimeOfDay time) async {
@@ -402,20 +403,20 @@ class _MoreState extends State<More> {
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) {
           return AlertDialog(
-            title: const Text('Add Custom Reminder'),
+            title:  Text('Add Custom Reminder'.tr),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: titleController,
                   decoration:
-                  const InputDecoration(labelText: 'Reminder Title'),
+                   InputDecoration(labelText: 'Reminder Title'.tr),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.access_time),
                   label: Text(selectedTime == null
-                      ? 'Pick Time'
+                      ? 'Pick Time'.tr
                       : selectedTime!.format(context)),
                   onPressed: () async {
                     final picked = await showTimePicker(
@@ -430,7 +431,7 @@ class _MoreState extends State<More> {
             actions: [
               TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel')),
+                  child:  Text('Cancel'.tr)),
               ElevatedButton(
                 onPressed: () {
                   if (titleController.text.isNotEmpty && selectedTime != null) {
@@ -439,7 +440,7 @@ class _MoreState extends State<More> {
                     Navigator.pop(context);
                   }
                 },
-                child: const Text('Save'),
+                child:  Text('Save'.tr),
               ),
             ],
           );
@@ -454,7 +455,7 @@ class _MoreState extends State<More> {
     return Scaffold(
       backgroundColor: AppColor.softBeige,
       appBar: AppBar(
-        title: const Text('Prayer & Reminders'),
+        title:  Text('Prayer & Reminders'.tr),
         centerTitle: true,
         backgroundColor: AppColor.emeraldGreen,
         elevation: 4,
@@ -538,9 +539,9 @@ class _MoreState extends State<More> {
             const SizedBox(height: 24),
 
             // Header
-            const Center(
+             Center(
               child: Text(
-                'Today’s Prayer Times',
+                'Today’s Prayer Times'.tr,
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -625,8 +626,8 @@ class _MoreState extends State<More> {
 
             const SizedBox(height: 24),
 
-            const Text(
-              'Custom Reminders',
+             Text(
+              'Custom Reminders'.tr,
               style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.emeraldGreen),
             ),
@@ -679,7 +680,7 @@ class _MoreState extends State<More> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16))),
                     icon: const Icon(Icons.add_alarm),
-                    label: const Text('Add Reminder'),
+                    label:  Text('Add Reminder'.tr),
                     onPressed: _showAddCustomReminderDialog),
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -689,7 +690,7 @@ class _MoreState extends State<More> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16))),
                     icon: const Icon(Icons.music_note),
-                    label: const Text('Custom Sound'),
+                    label:  Text('Custom Sound'.tr),
                     onPressed: pickCustomSound),
                 ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
@@ -699,16 +700,14 @@ class _MoreState extends State<More> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16))),
                     icon: const Icon(Icons.stop),
-                    label: const Text('Stop Sound'),
+                    label:  Text('Stop Sound'.tr),
                     onPressed: stopSound),
               ],
             ),
-
             const SizedBox(height: 30),
           ],
         ),
       ),
     );
   }
-
 }

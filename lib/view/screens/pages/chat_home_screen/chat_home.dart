@@ -1,8 +1,11 @@
-//
-//
+
+
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import '../../../../controller/chat_list_controller/chat_list.dart';
+// import '../../../../model/message_model/message_model.dart';
 // import '../../../../resources/buttom_navigation_bar/buttom_navigation.dart';
 // import '../../../../resources/colors/colors.dart';
 // import '../chat/chat.dart';
@@ -14,8 +17,12 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     controller.loadChats();
-//     final theme = Theme.of(context);
+//     // Load chats once after first frame (better than calling inside build)
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       if (!controller.isLoaded.value) {
+//         controller.loadChats();
+//       }
+//     });
 //
 //     return Scaffold(
 //       backgroundColor: AppColor.softBeige,
@@ -27,7 +34,6 @@
 //         foregroundColor: AppColor.whiteColor,
 //       ),
 //
-//       // New Chat Button
 //       floatingActionButton: FloatingActionButton.extended(
 //         backgroundColor: AppColor.emeraldGreen,
 //         icon: const Icon(Icons.chat_bubble_outline_rounded, color: AppColor.whiteColor),
@@ -40,7 +46,6 @@
 //
 //       bottomNavigationBar: const BottomNavigation(index: 2),
 //
-//       // Chat List
 //       body: Obx(() {
 //         if (controller.isLoading.value) {
 //           return const Center(
@@ -61,85 +66,14 @@
 //           );
 //         }
 //
+//         // ListView.builder is already efficient for large lists
 //         return ListView.separated(
 //           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
 //           itemCount: controller.chats.length,
 //           separatorBuilder: (_, __) => const SizedBox(height: 6),
 //           itemBuilder: (context, index) {
 //             final chat = controller.chats[index];
-//             final name = chat['name'] ?? 'Unknown';
-//             final lastMsg = chat['lastMessage'] ?? '';
-//             final userId = chat['userId'] ?? '';
-//
-//             return GestureDetector(
-//               onTap: () {
-//                 Get.to(() => ChatScreen(
-//                   receiverId: userId,
-//                   receiverName: name,
-//                 ));
-//               },
-//               child: Container(
-//                 margin: const EdgeInsets.symmetric(vertical: 4),
-//                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-//                 decoration: BoxDecoration(
-//                   color: AppColor.whiteCream,
-//                   borderRadius: BorderRadius.circular(16),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: AppColor.deepCharcoal.withOpacity(0.05),
-//                       blurRadius: 6,
-//                       offset: const Offset(0, 3),
-//                     ),
-//                   ],
-//                 ),
-//                 child: Row(
-//                   children: [
-//                     Hero(
-//                       tag: "chatAvatar_$userId",
-//                       child: CircleAvatar(
-//                         radius: 26,
-//                         backgroundColor: AppColor.emeraldGreen.withOpacity(0.2),
-//                         child: Text(
-//                           name.isNotEmpty ? name[0].toUpperCase() : "?",
-//                           style: const TextStyle(
-//                             fontWeight: FontWeight.bold,
-//                             color: AppColor.emeraldGreen,
-//                             fontSize: 20,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                     const SizedBox(width: 14),
-//                     Expanded(
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           Text(
-//                             name,
-//                             style: const TextStyle(
-//                               fontWeight: FontWeight.bold,
-//                               fontSize: 16,
-//                               color: AppColor.deepCharcoal,
-//                             ),
-//                           ),
-//                           const SizedBox(height: 4),
-//                           Text(
-//                             lastMsg,
-//                             maxLines: 1,
-//                             overflow: TextOverflow.ellipsis,
-//                             style: TextStyle(
-//                               fontSize: 14,
-//                               color: AppColor.deepCharcoal.withOpacity(0.6),
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                     const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: AppColor.deepCharcoal),
-//                   ],
-//                 ),
-//               ),
-//             );
+//             return ChatItemWidget(chat: chat);
 //           },
 //         );
 //       }),
@@ -220,6 +154,90 @@
 //     );
 //   }
 // }
+//
+// /// Separate widget for each chat item (reduces rebuild cost)
+// class ChatItemWidget extends StatelessWidget {
+//   final Map<String, dynamic> chat;
+//   const ChatItemWidget({required this.chat, Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final name = chat['name'] ?? 'Unknown';
+//     final lastMsg = chat['lastMessage'] ?? '';
+//     final userId = chat['userId'] ?? '';
+//
+//     return GestureDetector(
+//       onTap: () {
+//         Get.to(() => ChatScreen(
+//           receiverId: userId,
+//           receiverName: name,
+//         ));
+//       },
+//       child: Container(
+//         margin: const EdgeInsets.symmetric(vertical: 4),
+//         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+//         decoration: BoxDecoration(
+//           color: AppColor.whiteCream,
+//           borderRadius: BorderRadius.circular(16),
+//           boxShadow: [
+//             BoxShadow(
+//               color: AppColor.deepCharcoal.withOpacity(0.05),
+//               blurRadius: 6,
+//               offset: const Offset(0, 3),
+//             ),
+//           ],
+//         ),
+//         child: Row(
+//           children: [
+//             Hero(
+//               tag: "chatAvatar_$userId",
+//               child: CircleAvatar(
+//                 radius: 26,
+//                 backgroundColor: AppColor.emeraldGreen.withOpacity(0.2),
+//                 child: Text(
+//                   name.isNotEmpty ? name[0].toUpperCase() : "?",
+//                   style: const TextStyle(
+//                     fontWeight: FontWeight.bold,
+//                     color: AppColor.emeraldGreen,
+//                     fontSize: 20,
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             const SizedBox(width: 14),
+//             Expanded(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     name,
+//                     style: const TextStyle(
+//                       fontWeight: FontWeight.bold,
+//                       fontSize: 16,
+//                       color: AppColor.deepCharcoal,
+//                     ),
+//                   ),
+//                   const SizedBox(height: 4),
+//                   Text(
+//                     lastMsg,
+//                     maxLines: 1,
+//                     overflow: TextOverflow.ellipsis,
+//                     style: TextStyle(
+//                       fontSize: 14,
+//                       color: AppColor.deepCharcoal.withOpacity(0.6),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: AppColor.deepCharcoal),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -389,11 +407,27 @@ class ChatItemWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Get.to(() => ChatScreen(
-          receiverId: userId,
-          receiverName: name,
-        ));
+        final sharedData = Get.arguments;
+
+        if (sharedData != null && sharedData['lat'] != null) {
+          // We are coming from map share
+          final locationText =
+              "My location:\nLat: ${sharedData['lat']}\nLng: ${sharedData['lng']}";
+
+          Get.to(() => ChatScreen(
+            receiverId: userId,
+            receiverName: name,
+            sharedMessage: locationText,
+          ));
+        } else {
+          // Normal chat open
+          Get.to(() => ChatScreen(
+            receiverId: userId,
+            receiverName: name,
+          ));
+        }
       },
+
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
