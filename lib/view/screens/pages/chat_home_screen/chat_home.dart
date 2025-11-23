@@ -30,7 +30,7 @@ class ChatsHomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.softBeige,
       appBar: AppBar(
-        title: const Text('Chats'),
+        title:  Text('Chat'.tr),
         centerTitle: true,
         elevation: 2,
         backgroundColor: AppColor.emeraldGreen,
@@ -40,8 +40,8 @@ class ChatsHomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: AppColor.emeraldGreen,
         icon: const Icon(Icons.chat_bubble_outline_rounded, color: AppColor.whiteColor),
-        label: const Text(
-          "New Chat",
+        label:  Text(
+          "New Chat".tr,
           style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.whiteColor),
         ),
         onPressed: () => _showStartChatDialog(context),
@@ -59,7 +59,7 @@ class ChatsHomeScreen extends StatelessWidget {
         if (controller.chats.isEmpty) {
           return Center(
             child: Text(
-              'No chats yet.\nStart a new conversation!',
+              'No chats yet.\nStart a new conversation!'.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: AppColor.deepCharcoal.withOpacity(0.6),
@@ -94,8 +94,8 @@ class ChatsHomeScreen extends StatelessWidget {
           children: [
             Icon(Icons.chat_outlined, color: AppColor.emeraldGreen),
             const SizedBox(width: 8),
-            const Text(
-              "Start Chat",
+             Text(
+              "Start Chat".tr,
               style: TextStyle(fontWeight: FontWeight.bold, color: AppColor.deepCharcoal),
             ),
           ],
@@ -104,7 +104,7 @@ class ChatsHomeScreen extends StatelessWidget {
           controller: phoneController,
           keyboardType: TextInputType.phone,
           decoration: InputDecoration(
-            hintText: "Enter friend's phone number",
+            hintText: "Enter friend's phone number".tr,
             prefixIcon: const Icon(Icons.phone),
             filled: true,
             fillColor: AppColor.softBeige,
@@ -152,7 +152,7 @@ class ChatsHomeScreen extends StatelessWidget {
                 colorText: AppColor.deepCharcoal,
               );
             },
-            child: const Text("Start", style: TextStyle(color: AppColor.whiteColor)),
+            child:  Text("Start".tr, style: TextStyle(color: AppColor.whiteColor)),
           ),
         ],
       ),
